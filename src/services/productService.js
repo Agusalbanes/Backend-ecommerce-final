@@ -36,6 +36,62 @@ export const getProductByIdService = async (productId) => {
     return product;
 };
 
+// ✅ AGREGAR: Buscar producto por nombre
+export const findProductByNameService = async (productName) => {
+    if (!productName) {
+        const error = new Error("Product name is required");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    // Búsqueda case-insensitive
+    const products = await Product.find({
+        name: { $regex: productName, $options: 'i' }
+    });
+
+    if (!products || products.length === 0) {
+        const error = new Error(`No products found with name: ${productName}`);
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return products;
+};
+
+// ✅ AGREGAR: Obtener estadísticas de status
+export const getStatusService = async () => {
+    const statusStats = await Product.aggregate([
+        {
+            $group: {
+                _id: "$status",
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    // Si no hay productos, devolver estructura vacía
+    if (!statusStats || statusStats.length === 0) {
+        return {
+            total: 0,
+            status: {}
+        };
+    }
+
+    // Calcular total
+    const total = statusStats.reduce((sum, stat) => sum + stat.count, 0);
+
+    // Convertir a objeto más legible
+    const statusObject = {};
+    statusStats.forEach(stat => {
+        statusObject[stat._id] = stat.count;
+    });
+
+    return {
+        total,
+        status: statusObject
+    };
+};
+
 // Actualizar producto
 export const updateProductService = async (productId, updateData) => {
     const product = await Product.findById(productId);
@@ -45,7 +101,7 @@ export const updateProductService = async (productId, updateData) => {
         throw error;
     }
 
-const updatedProduct = await Product.findByIdAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
         productId,
         updateData,
         { new: true }

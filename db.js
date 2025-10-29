@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 import { MONGODB_URI, UTN_DB } from './config.js'
 
-//  conexion a la base de datos
 
 export const connectDB = async () => {
     try {

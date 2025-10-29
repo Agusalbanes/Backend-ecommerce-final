@@ -19,5 +19,4 @@ const verifyTokenMiddleware = (req, res, next) => {
     }
 }
 
-// Cambia a export default
 export default verifyTokenMiddleware

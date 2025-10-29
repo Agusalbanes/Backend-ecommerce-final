@@ -1,4 +1,12 @@
-import { createProductService, deleteProductService, updateProductService, getProductsService,getProductByIdService } from "../services/productService.js"
+import { 
+    createProductService, 
+    deleteProductService, 
+    updateProductService, 
+    getProductsService,
+    getProductByIdService,
+    findProductByNameService,  // ✅ AGREGAR ESTE IMPORT
+    getStatusService           // ✅ AGREGAR ESTE IMPORT
+} from "../services/productService.js"
 
 export const createProduct = async (req, res, next) => {
     try {
@@ -15,17 +23,25 @@ export const getProducts = async (req, res, next) => {
         return res.status(200).json(products)
     } catch (error) {
         next(error)
-        }
     }
+}
 
 export const findProductByName = async (req, res, next) => {
     try {
-        const product = await findProductByNameService(req.body.name)
+        // ✅ CORREGIR: usar req.query en lugar de req.body para GET
+        const { name } = req.query;
+        if (!name) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "El parámetro 'name' es requerido" 
+            });
+        }
+        const product = await findProductByNameService(name)
         return res.status(200).json(product)
     } catch (error) {
-    next(error)
-        }
+        next(error)
     }
+}
 
 export const findProductById = async (req, res, next) => {
     try {
@@ -42,8 +58,8 @@ export const updateProduct = async (req, res, next) => {
         const updatedProduct = await updateProductService(productId, req.body)
         res.status(200).json(updatedProduct)
     } catch (error) {
-    next(error)
-}
+        next(error)
+    }
 }
 
 export const deleteProduct = async (req, res, next) => {
@@ -52,15 +68,15 @@ export const deleteProduct = async (req, res, next) => {
         const deletedProduct = await deleteProductService(productId)
         res.status(200).json(deletedProduct)
     } catch (error) {
-    next(error)
-        }
+        next(error)
     }
+}
 
 export const getStatus = async (req, res, next) => {
     try {
         const status = await getStatusService()
         return res.status(200).json(status)
     } catch (error) {
-    next(error)
+        next(error)
     }
 }

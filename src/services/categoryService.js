@@ -30,7 +30,6 @@ export const getCategoryByIdService = async (id) => {
 }
 
 export const updateCategoryService = async (id, name) => {
-    // Verificar si la categoría existe
     const categoryExist = await Category.findById(id)
     
     if (!categoryExist) {
@@ -39,10 +38,9 @@ export const updateCategoryService = async (id, name) => {
         throw error
     }
 
-    // Verificar si ya existe otra categoría con el mismo nombre
     const existingCategory = await Category.findOne({ 
         name: name.toLowerCase(),
-        _id: { $ne: id } // Excluir la categoría actual
+        _id: { $ne: id } 
     })
     
     if (existingCategory) {
@@ -51,7 +49,6 @@ export const updateCategoryService = async (id, name) => {
         throw error
     }
 
-    // Actualizar la categoría
     const updatedCategory = await Category.findByIdAndUpdate(
         id, 
         { name: name.toLowerCase() }, 

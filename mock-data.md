@@ -1,55 +1,30 @@
- # API Documentation
-- Base URL: https://api.mitienda.com/v1
-- Autenticación: JWT Bearer Token
-- Formato: JSON
-
-# Endpoints organizados por modulo
-/auth
-  ├── POST /register
-  ├── POST /login
-  └── GET /logout
-
-/products
-  ├── GET / (listar)
-  ├── GET /:id (detalle)
-  ├── POST / (crear)
-  └── PUT /:id (actualizar)
-
-/cart
-  ├── GET / (ver carrito)
-  ├── POST / (agregar item)
-  └── DELETE /:id (eliminar item)
-
-# Detalles por endpoints
 AUTH/REGISTER
 POST http://localhost:3000/api/auth/register
-Content-Type: application/json
 
 {
-  "name": "usuario",
-  "lastName": "normal", 
-  "email": "usuario@test.com",
+  "name": "juan",
+  "lastName": "perez", 
+  "email": "jperez@test.com",
   "age": 25,
-  "password": "User123"
+  "password": "Juan123"
 }
 
 para admin
 {
-  "name": "admin",
-  "lastName": "user",
-  "email": "admin@test.com", 
+  "name": "rosa",
+  "lastName": "perez",
+  "email": "rperez@test.com", 
   "age": 30,
-  "password": "Admin123",
+  "password": "Rosa123",
   "role": "admin"
 }
 
 AUTH/LOGIN
 POST {{base_url}}/auth/login
-Content-Type: application/json
 
 {
-  "email": "usuario@test.com",
-  "password": "User123"
+  "email": "rperez@test.com",
+  "password": "Rosa123"
 }
 
 CATEGORY
@@ -57,9 +32,8 @@ CATEGORY
 GET {{base_url}}/api/category
 
 PROBAR RUTAS PROTEGIDAS SIN TOKEN (debe fallar)
-
 POST {{base_url}}/api/category
-Content-Type: application/json
+
 {
   "name": "Electrónicos"
 }
@@ -75,6 +49,9 @@ ACTUALIZAR CATEGORÍA (solo admin)
 PUT http://localhost:3000/api/category/:id
 Content-Type: application/json
 Authorization: Bearer {{admin_token}}
+{
+    "name": "Electronico"
+}
 
 Eliminar categoría (solo admin)
 DELETE {{base_url}}/api/category/id
@@ -107,18 +84,15 @@ GET {{base_url}}/api/cart
 
 CART/POST
 POST {{base_url}}/api/cart/add
-Content-Type: application/json
 Authorization: Bearer {{user_token}}
 {
   "productId": "{{product_id}}",
   "quantity": 2
 }
 
-
 CART/PUT
 ACTUALIZAR CANTIDAD EN CARRITO
 PUT {{base_url}}/api/cart/update
-Content-Type: application/json
 Authorization: Bearer {{user_token}}
 {
   "productId": "{{product_id}}",
@@ -128,7 +102,6 @@ Authorization: Bearer {{user_token}}
 CART/DELETE
 ELIMINAR PRODUCTO DEL CARRITO
 DELETE {{base_url}}/api/cart/remove
-Content-Type: application/json
 Authorization: Bearer {{user_token}}
 {
   "productId": "{{product_id}}"
@@ -143,7 +116,7 @@ RESTABLECIMIENTO DE CONTRASEÑA
 POST {{base_url}}/auth/forgot-password
 Content-Type: application/json
 {
-  "email": "usuario@test.com"
+  "email": "rperez@test.com"
 }
 
 POST {{base_url}}/auth/reset-password
@@ -157,6 +130,6 @@ VERIFICAR QUE FUNCIONA
 POST {{base_url}}/auth/login
 Content-Type: application/json
 {
-  "email": "usuario@test.com",
+  "email": "rperez@test.com",
   "password": "NuevaContraseña123"
 }

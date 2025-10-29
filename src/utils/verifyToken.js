@@ -1,4 +1,3 @@
-// Este util sirve para verificar los tokens
 import jwt from 'jsonwebtoken'
 import { SECRET } from '../../config.js'
 

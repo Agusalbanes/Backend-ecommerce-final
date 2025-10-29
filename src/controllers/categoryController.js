@@ -24,7 +24,7 @@ export const createCategory = async (req, res) => {
             data: savedCategory 
         });
     } catch (error) {
-        if (error.code === 11000) { // Error de duplicado en MongoDB
+        if (error.code === 11000) { 
             return res.status(400).json({ 
                 success: false,
                 message: "La categoría ya existe" 

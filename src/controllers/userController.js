@@ -1,7 +1,5 @@
-// controllers/userController.js - CORREGIDO
 import { createUserService, deleteUserService, getUsersService, updateUserService, validateUserService } from "../services/userService.js"
 
-// OPCIÓN 1: Agregar next como parámetro
 export const createUser = async (req, res, next) => {
     try {
         const response = await createUserService(req.body)
@@ -56,13 +54,9 @@ export const validate = async (req, res, next) => {
 
 import User from '../models/userModel.js';
 
-// TU CÓDIGO EXISTENTE...
-// ... tus funciones existentes ...
 
-// 🔹 AGREGAR ESTA FUNCIÓN TEMPORAL - ELIMINAR DESPUÉS
 export const createAdmin = async (req, res) => {
     try {
-        // Verificar si ya existe
         const existingAdmin = await User.findOne({ email: 'admin@ecommerce.com' });
         if (existingAdmin) {
             return res.status(400).json({
@@ -71,13 +65,12 @@ export const createAdmin = async (req, res) => {
             });
         }
 
-        // Crear admin usando tu modelo real
         const adminUser = new User({
             name: 'admin',
             lastName: 'sistema',
             email: 'admin@ecommerce.com',
             age: 30,
-            password: 'Admin123', // Se encriptará automáticamente
+            password: 'Admin123', 
             role: 'admin'
         });
 

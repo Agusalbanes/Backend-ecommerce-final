@@ -60,7 +60,6 @@ const productSchema = new mongoose.Schema({
             throw new Error("Not enough quantity")
         }
         this.stock -= amount
-        // Se guarda en la db el nuevo valor
         await this.save()
     }
 

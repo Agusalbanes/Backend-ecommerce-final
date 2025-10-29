@@ -1,4 +1,5 @@
 import Cart from "../models/cartModel.js"
+import mongoose from "mongoose"
 
 export const getCartByUser = async (userId) => {
     let cart = await Cart.findOne({ user: userId }).populate("items.product")
@@ -9,25 +10,35 @@ export const getCartByUser = async (userId) => {
     return cart
 }
 
-// Agregar producto al carrito
+// Agregar producto al carrito - CORREGIDO
 export const addItemToCart = async (userId, productId, quantity = 1) => {
     const cart = await getCartByUser(userId)
+    const productObjectId = new mongoose.Types.ObjectId(productId)
 
-    const existingItem = cart.items.find(item => item.product.toString() === productId)
+    // CORREGIDO: comparar item.product._id en lugar de item.product
+    const existingItem = cart.items.find(item => 
+        item.product._id.toString() === productObjectId.toString()
+    )
+    
     if (existingItem) {
         existingItem.quantity += quantity
     } else {
-        cart.items.push({ product: productId, quantity })
+        cart.items.push({ product: productObjectId, quantity })
     }
 
     await cart.save()
     return await cart.populate("items.product")
 }
 
-// Actualizar cantidad de un producto en el carrito
+// Actualizar cantidad de un producto en el carrito - CORREGIDO
 export const updateItemInCart = async (userId, productId, quantity) => {
     const cart = await getCartByUser(userId)
-    const item = cart.items.find(item => item.product.toString() === productId)
+    const productObjectId = new mongoose.Types.ObjectId(productId)
+    
+    // CORREGIDO: comparar item.product._id en lugar de item.product
+    const item = cart.items.find(item => 
+        item.product._id.toString() === productObjectId.toString()
+    )
 
     if (!item) {
         const error = new Error("Producto no encontrado en el carrito")
@@ -36,7 +47,9 @@ export const updateItemInCart = async (userId, productId, quantity) => {
     }
 
     if (quantity <= 0) {
-        cart.items = cart.items.filter(i => i.product.toString() !== productId)
+        cart.items = cart.items.filter(i => 
+            i.product._id.toString() !== productObjectId.toString()
+        )
     } else {
         item.quantity = quantity
     }
@@ -45,10 +58,15 @@ export const updateItemInCart = async (userId, productId, quantity) => {
     return await cart.populate("items.product")
 }
 
-// Eliminar producto del carrito
+// Eliminar producto del carrito - CORREGIDO
 export const removeItemFromCart = async (userId, productId) => {
     const cart = await getCartByUser(userId)
-    const exists = cart.items.some(item => item.product.toString() === productId)
+    const productObjectId = new mongoose.Types.ObjectId(productId)
+    
+    // CORREGIDO: comparar item.product._id en lugar de item.product
+    const exists = cart.items.some(item => 
+        item.product._id.toString() === productObjectId.toString()
+    )
 
     if (!exists) {
         const error = new Error("Producto no encontrado en el carrito")
@@ -56,7 +74,10 @@ export const removeItemFromCart = async (userId, productId) => {
         throw error
     }
 
-    cart.items = cart.items.filter(item => item.product.toString() !== productId)
+    cart.items = cart.items.filter(item => 
+        item.product._id.toString() !== productObjectId.toString()
+    )
+    
     await cart.save()
     return await cart.populate("items.product")
 }

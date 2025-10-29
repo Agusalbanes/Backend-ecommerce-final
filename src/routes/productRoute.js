@@ -4,8 +4,6 @@ import { authRequired, adminRequired } from '../middlewares/authMiddlewere.js'
 
 const productRoute = express.Router()
 
-//Endpoints
-
 productRoute.get("/", getProducts)
 productRoute.get("/status", getStatus)
 productRoute.get("/name", findProductByName)
