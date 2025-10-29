@@ -90,11 +90,9 @@ Algunas de las funcionalidades principales
 | `PUT /api/products/:id` | `PUT` | Actualizar un producto |
 | `DELETE /api/products/:id` | `DELETE` | Eliminar un producto |
 | `GET /api/cart` | `GET` | Ver el carrito del usuario |
-| `POST /api/cart` | `POST` | Agregar un ítem al carrito |
-| `PUT /api/cart/:itemId` | `PUT` | Actualizar cantidad de un ítem en el carrito |
-| `DELETE /api/cart/:itemId` | `DELETE` | Remover un ítem del carrito |
-| `POST /api/orders` | `POST` | Crear una orden/pedido |
-| `GET /api/orders/:id` | `GET` | Obtener una orden específica |
+| `POST /api/cart/add` | `POST` | Agregar un ítem al carrito |
+| `PUT /api/cart/update` | `PUT` | Actualizar cantidad de un ítem en el carrito |
+| `DELETE /api/cart/remove` | `DELETE` | Remover un ítem del carrito |
 
 
 ## 🧱 Arquitectura

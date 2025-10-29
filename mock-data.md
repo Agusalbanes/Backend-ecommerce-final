@@ -20,7 +20,7 @@ para admin
 }
 
 AUTH/LOGIN
-POST {{base_url}}/auth/login
+POST {{base_url}}/api/auth/login
 
 {
   "email": "rperez@test.com",
@@ -75,12 +75,17 @@ Authorization: Bearer {{admin_token}}
 Buscar por nombre:
 GET {{base_url}}/api/product/name?name=zapatillas
 
+Actualizar producto:
+PUT {{base_url}}/api/product/:id
+
 Obtener status:
 GET {{base_url}}/api/product/status
 
+Eliminar un producto:
+DELETE {{base_url}}/api/product/:id
+
 CART/GET
 GET {{base_url}}/api/cart
-
 
 CART/POST
 POST {{base_url}}/api/cart/add
