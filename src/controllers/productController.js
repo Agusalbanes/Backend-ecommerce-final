@@ -4,8 +4,8 @@ import {
     updateProductService, 
     getProductsService,
     getProductByIdService,
-    findProductByNameService,  // ✅ AGREGAR ESTE IMPORT
-    getStatusService           // ✅ AGREGAR ESTE IMPORT
+    findProductByNameService,  
+    getStatusService           
 } from "../services/productService.js"
 
 export const createProduct = async (req, res, next) => {
@@ -28,7 +28,6 @@ export const getProducts = async (req, res, next) => {
 
 export const findProductByName = async (req, res, next) => {
     try {
-        // ✅ CORREGIR: usar req.query en lugar de req.body para GET
         const { name } = req.query;
         if (!name) {
             return res.status(400).json({ 

@@ -113,7 +113,13 @@ Algunas de las funcionalidades principales
  
 - Agregar validaciones y manejo de errores más robusto.    
 - Tests para endpoints.  
-- Integración con pasarela de pagos (Stripe, PayPal) si se planea producción.    
+- Integración con pasarela de pagos (Stripe, PayPal) si se planea producción.   
+
+
+## 👨‍💻 Autor
+Agustina Albanés
+GitHub: @Agusalbanes
+Proyecto: Crea Recuerdos Ecommerce
 
 
 

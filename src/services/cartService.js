@@ -10,12 +10,10 @@ export const getCartByUser = async (userId) => {
     return cart
 }
 
-// Agregar producto al carrito - CORREGIDO
 export const addItemToCart = async (userId, productId, quantity = 1) => {
     const cart = await getCartByUser(userId)
     const productObjectId = new mongoose.Types.ObjectId(productId)
 
-    // CORREGIDO: comparar item.product._id en lugar de item.product
     const existingItem = cart.items.find(item => 
         item.product._id.toString() === productObjectId.toString()
     )
@@ -35,7 +33,6 @@ export const updateItemInCart = async (userId, productId, quantity) => {
     const cart = await getCartByUser(userId)
     const productObjectId = new mongoose.Types.ObjectId(productId)
     
-    // CORREGIDO: comparar item.product._id en lugar de item.product
     const item = cart.items.find(item => 
         item.product._id.toString() === productObjectId.toString()
     )
@@ -63,7 +60,6 @@ export const removeItemFromCart = async (userId, productId) => {
     const cart = await getCartByUser(userId)
     const productObjectId = new mongoose.Types.ObjectId(productId)
     
-    // CORREGIDO: comparar item.product._id en lugar de item.product
     const exists = cart.items.some(item => 
         item.product._id.toString() === productObjectId.toString()
     )

@@ -118,13 +118,13 @@ Authorization: Bearer {{user_token}}
 
 
 RESTABLECIMIENTO DE CONTRASEÑA
-POST {{base_url}}/auth/forgot-password
+POST {{base_url}}/api/auth/forgot-password
 Content-Type: application/json
 {
   "email": "rperez@test.com"
 }
 
-POST {{base_url}}/auth/reset-password
+POST {{base_url}}/api/auth/reset-password
 Content-Type: application/json
 {
   "token": "token_que_recibiste_en_la_respuesta_anterior",

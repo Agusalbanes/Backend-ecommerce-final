@@ -36,7 +36,6 @@ export const getProductByIdService = async (productId) => {
     return product;
 };
 
-// ✅ AGREGAR: Buscar producto por nombre
 export const findProductByNameService = async (productName) => {
     if (!productName) {
         const error = new Error("Product name is required");
@@ -44,7 +43,6 @@ export const findProductByNameService = async (productName) => {
         throw error;
     }
 
-    // Búsqueda case-insensitive
     const products = await Product.find({
         name: { $regex: productName, $options: 'i' }
     });
@@ -58,7 +56,6 @@ export const findProductByNameService = async (productName) => {
     return products;
 };
 
-// ✅ AGREGAR: Obtener estadísticas de status
 export const getStatusService = async () => {
     const statusStats = await Product.aggregate([
         {
